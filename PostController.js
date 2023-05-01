@@ -2,7 +2,8 @@ import PostService from "./PostService.js"
 class PostController {
     async create(req, res) {
         try {
-            const post = await PostService.create(req.body)
+            console.log(req.files)
+            const post = await PostService.create(req.files.story)
             res.status(200).json(post)
         } catch (error) {
             res.status(500).json(error)
@@ -42,6 +43,25 @@ class PostController {
             const {id} = req.params
             const post = await PostService.delete(id)
             return res.json(post)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
+    async deleteAll(req, res) {
+        try {
+            const post = await PostService.deleteAll()
+            return res.json(post)
+        } catch (error) {
+            res.status(500).json(error)
+        }
+    }
+
+    async getFiles(req, res)
+    {
+        try {
+            const files = await PostService.getFiles()
+            return res.json(files)
         } catch (error) {
             res.status(500).json(error)
         }

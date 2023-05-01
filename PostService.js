@@ -1,7 +1,10 @@
 import PostModel from "./PostModel.js"
+import FileService from "./FileService.js"
+
 class PostService {
-    async create(post) {
-        const createdPost = await PostModel.create(post)
+    async create(file) {
+        const fileName = FileService.saveFile(file)
+        const createdPost = await PostModel.create({story: fileName})
         return createdPost
     }
 
@@ -35,6 +38,17 @@ class PostService {
         }
         const post = await PostModel.findByIdAndDelete(id);
         return post
+    }
+
+    async deleteAll() {
+        const post = await PostModel.deleteMany({"story": null});
+        return post
+    }
+
+    async getFiles()
+    {
+        const files = await FileService.getFiles()
+        return files
     }
 }
 
