@@ -5,10 +5,10 @@ class FileService {
     saveFile(file)
     {
         try {
-            const fileName = file.name
+            const fileName = path.basename(file.name, path.extname(file.name))
             const filePath = path.resolve("stories", fileName)
             file.mv(filePath)
-            return fileName;
+            return file.name;
         } catch (error) {
             console.log(error)
         }
